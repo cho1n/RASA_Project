@@ -7,6 +7,7 @@ nlu:
     - hello
     - hi
     - hello there
+    - hi there
     - good morning
     - good evening
     - moin
@@ -89,3 +90,36 @@ nlu:
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
+
+- intent: stock_info
+  examples: |
+    - give me information about [Apple](stock)
+    - give me information about [Apple](stock) stock
+    - give me information about [MicroSoft](stock)
+    - give me information about [AMAZON](stock)
+    - give me information about [GOOGLE](stock)
+
+- intent: stock_news
+  examples: |
+    - give me news about [Apple](stock)
+    - give me news about [Apple](stock) stock
+    - give me news about [MicroSoft](stock)
+    - give me news about [AMAZON](stock)
+    - give me news about [GOOGLE](stock)
+
+- intent: stock_analysis
+  examples: |
+    - give me analysis about [Apple](stock)
+    - give me analysis about [Apple](stock) stock
+    - give me analysis about [MicroSoft](stock)
+    - give me analysis about [AMAZON](stock)
+    - give me analysis about [GOOGLE](stock)
+
+- intent: retrieve_stock_data
+  examples: |
+    - retrieve stock data
+    - fetch stock information
+    - get data for a stock
+    - stock data retrieval
+    - tell me about a stock
+    - what's the stock information

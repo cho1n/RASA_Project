@@ -7,7 +7,12 @@ stories:
   - intent: greet
   - action: utter_greet
   - intent: mood_great
-  - action: utter_happy
+  - action: 
+
+- story: Retrieve stock data
+  steps:
+  - intent: retrieve_stock_data
+  - action: action_retrieve_stock_data
 
 - story: sad path 1
   steps:
@@ -27,4 +32,31 @@ stories:
   - action: utter_cheer_up
   - action: utter_did_that_help
   - intent: deny
+  - action: utter_goodbye
+
+- story: User asks for stock info
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: stock_info
+  - action: action_get_stock_info
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: User asks for stock news
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: stock_news
+  - action: action_get_stock_news
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: User asks for stock analysis
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: stock_analysis
+  - action: action_get_stock_analysis
+  - intent: goodbye
   - action: utter_goodbye
