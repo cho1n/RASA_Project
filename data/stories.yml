@@ -2,8 +2,10 @@ version: "3.1"
 
 stories:
 
-- story: User register with name and stock
+- story: User register and recommend stock
   steps:
+  - intent: greet
+  - action: utter_greet
   - intent: greet_userinfo
     entities:
       - name: Jaewon
@@ -13,15 +15,16 @@ stories:
       - name: Jaewon
       - stock: Apple
   - action: action_put_user_info
+  - intent: stock_recommend
+  - action: action_get_recommend_stock
+  - intent: update_recommend_stock
+  - action: action_update_recommend_stock
+  - intent: thanks
+  - action: utter_ask_continue
+  - intent: goodbye
+  - action: utter_goodbye
 
-- story: User Log in
-  steps:
-  - intent: greet_userinfo
-    entities:
-      - name: Minwoo
-  - action: action_get_user_info
-
-- story: User logs in
+- story: User Log in and recommend stock
   steps:
   - intent: greet
   - action: utter_greet
@@ -29,6 +32,27 @@ stories:
     entities:
       - name: Jaewon
   - action: action_get_user_info
+  - intent: stock_recommend
+  - action: action_get_recommend_stock
+  - intent: update_recommend_stock
+  - action: action_update_recommend_stock
+  - intent: thanks
+  - action: utter_ask_continue
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: User Log in and get information about stock
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: greet_userinfo
+    entities:
+      - name: Jaewon
+  - action: action_get_user_info
+  - intent: stock_recommend
+  - action: action_get_recommend_stock
+  - intent: news_for_recommend_stock
+  - action: action_get_my_stock_news
   - intent: thanks
   - action: utter_ask_continue
   - intent: goodbye
@@ -73,7 +97,7 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
-- story: User asks for stock news 
+- story: just asks for stock news 
   steps:
   - intent: stock_news
     entities:
@@ -101,6 +125,26 @@ stories:
     entities:
       - stock: Apple
   - action: action_get_stock_analysis
+  - intent: thanks
+  - action: utter_ask_continue
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: just asks for recommend stock
+  steps:
+  - intent: stock_recommend
+  - action: action_get_recommend_stock
+  - intent: thanks
+  - action: utter_ask_continue
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: Greet and asks for recommend stock
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: stock_recommend
+  - action: action_get_recommend_stock
   - intent: thanks
   - action: utter_ask_continue
   - intent: goodbye

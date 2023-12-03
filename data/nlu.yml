@@ -42,22 +42,22 @@ nlu:
 
 - intent: greet_userinfo
   examples: |
-    - Hi. Log in [Jaewon](name)
-    - Hi. Log in [Minwoo](name)
-    - Hi. Log in [Jihoon](name)
-    - Hi. Log in [Jiho](name)
-    - Hello. Log in [Jaewon](name)
-    - Hello. Log in [Minwoo](name)
-    - Hello. Log in [Jihoon](name)
-    - Hello. Log in [Jiho](name)
-    - Hello. I want to sign up. my name is [Jaewon](name)
-    - Hello. I want to sign up. my name is [Minwoo](name)
-    - Hello. I want to sign up. my name is [Jihoon](name)
-    - Hello. I want to sign up. my name is [Jiho](name)
     - Log in [Jaewon](name)
     - Log in [Minwoo](name)
     - Log in [Jihoon](name)
     - Log in [Jiho](name)
+    - Log in [Sungho](name)
+    - Log in [Changsub](name)
+    - I want to Log in [Jaewon](name)
+    - I want to Log in [Minwoo](name)
+    - I want to Log in [Jihoon](name)
+    - I want to Log in [Jiho](name)
+    - I want to Log in [Sungho](name)
+    - I want to Log in [Changsub](name)
+    - I want to I want to sign up. my name is [Jaewon](name)
+    - I want to I want to sign up. my name is [Minwoo](name)
+    - I want to I want to sign up. my name is [Jihoon](name)
+    - I want to I want to sign up. my name is [Jiho](name)
 
 - intent: input_userinfo
   examples: |
@@ -177,3 +177,33 @@ nlu:
     - how about [MicroSoft](stock)
     - how about [AMAZON](stock)
     - how about [GOOGLE](stock)
+
+- intent: stock_recommend
+  examples: |
+    - recommend me a stock
+    - recommend me a stock please
+    - what stock should I buy
+    - what stock should I buy today
+    - what is the best stock to buy
+    - what is the best stock to buy today
+    - what is recommended stock
+
+- intent: update_recommend_stock
+  examples: |
+    - update my stock for recommendation
+    - please update my stock for recommendation
+    - update my stock what you recommend
+    - please update my stock what you recommend
+    - update my stock
+    - please update my stock
+
+- intent: news_for_recommend_stock
+  examples: |
+    - Please give me for news about recommended stock
+    - Can you give me for news about recommended stock
+    - Can you give me for news about recommended stock please
+    - what is the news about recommended stock
+
+
+
+      

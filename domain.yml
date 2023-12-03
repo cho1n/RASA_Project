@@ -5,8 +5,6 @@ intents:
   - goodbye
   - affirm
   - deny
-  - mood_great
-  - mood_unhappy
   - bot_challenge
   - stock_info
   - stock_news
@@ -14,25 +12,44 @@ intents:
   - thanks
   - greet_userinfo
   - input_userinfo
+  - stock_recommend
+  - update_recommend_stock
+  - news_for_recommend_stock
 
 slots:
   stock_name:
     type: text
-    influence_conversation: false
+    influence_conversation: true
     mappings:
       - type: from_entity
         entity: stock
 
   name:
     type: text
-    influence_conversation: false
+    influence_conversation: true
     mappings:
       - type: from_entity
         entity: name
 
+  remember_user_name:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: remember_user_name
+
+  recommended_stock:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: recommended_stock
+
 entities:
   - stock
   - name
+  - recommended_stock
+  - remember_user_name
 
 actions:
   - action_get_stock_info
@@ -40,6 +57,9 @@ actions:
   - action_get_stock_analysis
   - action_get_user_info
   - action_put_user_info
+  - action_update_recommend_stock
+  - action_get_recommend_stock
+  - action_get_my_stock_news
 
 templates:
   utter_ask_stock_name:

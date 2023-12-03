@@ -11,3 +11,18 @@ rules:
   steps:
   - intent: bot_challenge
   - action: utter_iamabot
+
+- rule: Ask Stock info
+  steps:
+  - intent: stock_info
+  - action: action_get_stock_info
+
+- rule: Ask Stock news
+  steps:
+  - intent: stock_news
+  - action: action_get_stock_news
+
+- rule: Ask Stock analysis
+  steps:
+  - intent: stock_analysis
+  - action: action_get_stock_analysis
