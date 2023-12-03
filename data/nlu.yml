@@ -40,6 +40,49 @@ nlu:
     - that sounds good
     - correct
 
+- intent: greet_userinfo
+  examples: |
+    - Hi. Log in [Jaewon](name)
+    - Hi. Log in [Minwoo](name)
+    - Hi. Log in [Jihoon](name)
+    - Hi. Log in [Jiho](name)
+    - Hello. Log in [Jaewon](name)
+    - Hello. Log in [Minwoo](name)
+    - Hello. Log in [Jihoon](name)
+    - Hello. Log in [Jiho](name)
+    - Hello. I want to sign up. my name is [Jaewon](name)
+    - Hello. I want to sign up. my name is [Minwoo](name)
+    - Hello. I want to sign up. my name is [Jihoon](name)
+    - Hello. I want to sign up. my name is [Jiho](name)
+    - Log in [Jaewon](name)
+    - Log in [Minwoo](name)
+    - Log in [Jihoon](name)
+    - Log in [Jiho](name)
+
+- intent: input_userinfo
+  examples: |
+    - i want to sign up. my name is [Jaewon](name), my interest stock is [Apple](stock)
+    - i want to sign up. my name is [Minwoo](name), my interest stock is [Apple](stock)
+    - i want to sign up. my name is [Jihoon](name), my interest stock is [Apple](stock)
+    - i want to sign up. my name is [Jiho](name), my interest stock is [Apple](stock)
+    - i want to sign up. my name is [Jaewon](name), my interest stock is [MicroSoft](stock)
+    - i want to sign up. my name is [Minwoo](name), my interest stock is [MicroSoft](stock)
+    - i want to sign up. my name is [Jihoon](name), my interest stock is [MicroSoft](stock)
+    - i want to sign up. my name is [Jiho](name), my interest stock is [MicroSoft](stock)
+    - i want to sign up. my name is [Jaewon](name), my interest stock is [AMAZON](stock)
+    - i want to sign up. my name is [Minwoo](name), my interest stock is [AMAZON](stock)
+    - i want to sign up. my name is [Jihoon](name), my interest stock is [AMAZON](stock)
+    - i want to sign up. my name is [Jiho](name), my interest stock is [AMAZON](stock)
+    - my name is [Jaewon](name), my interest stock is [Apple](stock)
+    - my name is [Minwoo](name), my interest stock is [Apple](stock)
+    - my name is [Jihoon](name), my interest stock is [Apple](stock)
+    - my name is [Jiho](name), my interest stock is [Apple](stock)
+    - my name is [Jaewon](name), my interest stock is [MicroSoft](stock)
+    - my name is [Minwoo](name), my interest stock is [MicroSoft](stock)
+    - my name is [Jihoon](name), my interest stock is [MicroSoft](stock)
+    - my name is [Jiho](name), my interest stock is [MicroSoft](stock)
+
+
 - intent: deny
   examples: |
     - no
@@ -50,39 +93,24 @@ nlu:
     - no way
     - not really
 
-- intent: mood_great
+- intent : thanks
   examples: |
-    - perfect
+    - thanks
+    - thank you
+    - thank you so much
+    - thanks bot
+    - thanks for that
+    - perfact
+    - nice
+    - well done
     - great
+    - good
     - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
-
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
+    - cool
+    - ok thanks!
+    - perfect thank you
+    - thanks a lot
+    - amazing, thanks
 
 - intent: bot_challenge
   examples: |
@@ -98,6 +126,16 @@ nlu:
     - give me information about [MicroSoft](stock)
     - give me information about [AMAZON](stock)
     - give me information about [GOOGLE](stock)
+    - give me information about [TESLA](stock)
+    - give me information about [SAMSUNG](stock)
+    - give me information about [FACEBOOK](stock)
+    - give me information about [NETFLIX](stock)
+    - give me information about [NVIDIA](stock)
+    - give me information about [INTEL](stock)
+    - please give me information about [Apple](stock)
+    - please give me information about [Apple](stock) stock
+    - please give me information about [MicroSoft](stock)
+    - please give me information about [AMAZON](stock)
 
 - intent: stock_news
   examples: |
@@ -106,6 +144,20 @@ nlu:
     - give me news about [MicroSoft](stock)
     - give me news about [AMAZON](stock)
     - give me news about [GOOGLE](stock)
+    - give me news about [TESLA](stock)
+    - give me news about [SAMSUNG](stock)
+    - give me news about [FACEBOOK](stock)
+    - give me news about [NETFLIX](stock)
+    - give me news about [NVIDIA](stock)
+    - give me news about [INTEL](stock)
+    - Do you have any news about [Apple](stock)
+    - Do you have any news about [Apple](stock) stock
+    - Do you have any news about [MicroSoft](stock)
+    - Do you have any news about [AMAZON](stock)
+    - Do you have any news about [GOOGLE](stock)
+    - Do you have any news about [TESLA](stock)
+    - Do you have any news about [SAMSUNG](stock)
+    - Do you have any news about [FACEBOOK](stock)
 
 - intent: stock_analysis
   examples: |
@@ -114,12 +166,14 @@ nlu:
     - give me analysis about [MicroSoft](stock)
     - give me analysis about [AMAZON](stock)
     - give me analysis about [GOOGLE](stock)
-
-- intent: retrieve_stock_data
-  examples: |
-    - retrieve stock data
-    - fetch stock information
-    - get data for a stock
-    - stock data retrieval
-    - tell me about a stock
-    - what's the stock information
+    - give me analysis about [TESLA](stock)
+    - give me analysis about [SAMSUNG](stock)
+    - give me analysis about [FACEBOOK](stock)
+    - give me analysis about [NETFLIX](stock)
+    - give me analysis about [NVIDIA](stock)
+    - give me analysis about [INTEL](stock)
+    - how about [Apple](stock)
+    - how about [Apple](stock) stock
+    - how about [MicroSoft](stock)
+    - how about [AMAZON](stock)
+    - how about [GOOGLE](stock)

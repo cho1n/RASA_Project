@@ -2,36 +2,36 @@ version: "3.1"
 
 stories:
 
-- story: happy path
+- story: User register with name and stock
+  steps:
+  - intent: greet_userinfo
+    entities:
+      - name: Jaewon
+  - action: action_get_user_info
+  - intent: input_userinfo
+    entities:
+      - name: Jaewon
+      - stock: Apple
+  - action: action_put_user_info
+
+- story: User Log in
+  steps:
+  - intent: greet_userinfo
+    entities:
+      - name: Minwoo
+  - action: action_get_user_info
+
+- story: User logs in
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: mood_great
-  - action: 
-
-- story: Retrieve stock data
-  steps:
-  - intent: retrieve_stock_data
-  - action: action_retrieve_stock_data
-
-- story: sad path 1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
-
-- story: sad path 2
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
+  - intent: greet_userinfo
+    entities:
+      - name: Jaewon
+  - action: action_get_user_info
+  - intent: thanks
+  - action: utter_ask_continue
+  - intent: goodbye
   - action: utter_goodbye
 
 - story: User asks for stock info
@@ -39,7 +39,11 @@ stories:
   - intent: greet
   - action: utter_greet
   - intent: stock_info
+    entities:
+      - stock: Apple
   - action: action_get_stock_info
+  - intent: thanks
+  - action: utter_ask_continue
   - intent: goodbye
   - action: utter_goodbye
 
@@ -48,7 +52,11 @@ stories:
   - intent: greet
   - action: utter_greet
   - intent: stock_news
+    entities:
+      - stock: Apple
   - action: action_get_stock_news
+  - intent: thanks
+  - action: utter_ask_continue
   - intent: goodbye
   - action: utter_goodbye
 
@@ -57,6 +65,43 @@ stories:
   - intent: greet
   - action: utter_greet
   - intent: stock_analysis
+    entities:
+      - stock: Apple
   - action: action_get_stock_analysis
+  - intent: thanks
+  - action: utter_ask_continue
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: User asks for stock news 
+  steps:
+  - intent: stock_news
+    entities:
+      - stock: Apple
+  - action: action_get_stock_news
+  - intent: thanks
+  - action: utter_ask_continue
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: just asks for stock info
+  steps:
+  - intent: stock_info
+    entities:
+      - stock: Apple
+  - action: action_get_stock_info
+  - intent: thanks
+  - action: utter_ask_continue
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: just asks for stock analysis
+  steps:
+  - intent: stock_analysis
+    entities:
+      - stock: Apple
+  - action: action_get_stock_analysis
+  - intent: thanks
+  - action: utter_ask_continue
   - intent: goodbye
   - action: utter_goodbye

@@ -8,13 +8,12 @@ intents:
   - mood_great
   - mood_unhappy
   - bot_challenge
-  - get_stock_info
-  - get_stock_news
-  - get_stock_analysis
   - stock_info
   - stock_news
   - stock_analysis
-  - retrieve_stock_data
+  - thanks
+  - greet_userinfo
+  - input_userinfo
 
 slots:
   stock_name:
@@ -23,14 +22,24 @@ slots:
     mappings:
       - type: from_entity
         entity: stock
+
+  name:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: name
+
 entities:
   - stock
+  - name
 
 actions:
   - action_get_stock_info
   - action_get_stock_news
   - action_get_stock_analysis
-  - action_retrieve_stock_data
+  - action_get_user_info
+  - action_put_user_info
 
 templates:
   utter_ask_stock_name:
@@ -55,6 +64,9 @@ responses:
 
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
+
+  utter_ask_continue:
+  - text: "You're Welcome ! Do you want to continue? or anything else?"
 
 session_config:
   session_expiration_time: 60
