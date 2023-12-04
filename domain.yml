@@ -31,25 +31,11 @@ slots:
       - type: from_entity
         entity: name
 
-  remember_user_name:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: remember_user_name
-
-  recommended_stock:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: recommended_stock
-
 entities:
   - stock
   - name
-  - recommended_stock
-  - remember_user_name
+  - recommendStock
+  - rememberName
 
 actions:
   - action_get_stock_info
@@ -60,6 +46,7 @@ actions:
   - action_update_recommend_stock
   - action_get_recommend_stock
   - action_get_my_stock_news
+  - action_update_my_stock
 
 templates:
   utter_ask_stock_name:

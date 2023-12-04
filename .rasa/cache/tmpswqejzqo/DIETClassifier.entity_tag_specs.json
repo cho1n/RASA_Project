@@ -1,0 +1,36 @@
+[
+  {
+    "tag_name": "entity",
+    "ids_to_tags": {
+      "1": "B-nrememberName",
+      "2": "I-nrememberName",
+      "3": "L-nrememberName",
+      "4": "U-nrememberName",
+      "5": "B-rememberName",
+      "6": "I-rememberName",
+      "7": "L-rememberName",
+      "8": "U-rememberName",
+      "9": "B-stock",
+      "10": "I-stock",
+      "11": "L-stock",
+      "12": "U-stock",
+      "0": "O"
+    },
+    "tags_to_ids": {
+      "B-nrememberName": 1,
+      "I-nrememberName": 2,
+      "L-nrememberName": 3,
+      "U-nrememberName": 4,
+      "B-rememberName": 5,
+      "I-rememberName": 6,
+      "L-rememberName": 7,
+      "U-rememberName": 8,
+      "B-stock": 9,
+      "I-stock": 10,
+      "L-stock": 11,
+      "U-stock": 12,
+      "O": 0
+    },
+    "num_tags": 13
+  }
+]

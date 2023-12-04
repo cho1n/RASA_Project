@@ -4,6 +4,8 @@ from typing import Text, Dict, Any, List
 import pymysql
 from sqlalchemy.dialects import registry
 from rasa_sdk.events import SlotSet
+recommendStock, rememberName = None, None
+
 
 # Register the MySQL dialect with SQLAlchemy
 registry.register("mysql", "sqlalchemy.dialects.mysql.mysqldb", "MySQLDialect_mysqldb")
@@ -134,10 +136,9 @@ class ActionGetUserInfo(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        user_name = tracker.get_slot('name')
-        print(user_name)
-
+        global rememberName
+        rememberName = next(tracker.get_latest_entity_values("rememberName"), None)
+        user_name = rememberName
         connection = pymysql.connect(host='127.0.0.1',
                              user='root',
                              password='0623',
@@ -152,7 +153,7 @@ class ActionGetUserInfo(Action):
                     SELECT User.*, info_stock.*
                     FROM User
                     LEFT JOIN info_stock ON User.stock_name = info_stock.name
-                    WHERE User.name='{user_name}'
+                    WHERE User.name='{rememberName}'
                 """
                 cursor.execute(sql_user)
                 user_info = cursor.fetchone()
@@ -172,7 +173,7 @@ class ActionGetUserInfo(Action):
                                                   f"Closing Price of your interest Stock: {stock_closing_price * 1350} ₩\n"
                                                   f"Fluctuation Price of interest Stock: {stock_fluctuation_price}.\n"
                                                   f"Do you need a more help ?")
-                    return [SlotSet("remember_user_name", user_name)]
+                    rememberName = user_name
                 else :
                     dispatcher.utter_message(text=f"I'm sorry. {user_name}, you are not registered. Please sign up first.")
 
@@ -189,11 +190,10 @@ class ActionPutUserInfo(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        global rememberName
+        rememberName = next(tracker.get_latest_entity_values("rememberName"), None)
+        stock_name = tracker.get_slot('stock_name')
 
-        user_name = tracker.get_slot('name')
-        user_stock = tracker.get_slot('stock_name')
-        print(user_name, user_stock)
-        
         connection = pymysql.connect(host='127.0.0.1',
                              user='root',
                              password='0623',
@@ -204,20 +204,19 @@ class ActionPutUserInfo(Action):
         try:
             with connection.cursor() as cursor:
                 # SQL 쿼리 실행
-                sql_user = f"SELECT * FROM User WHERE name='{user_name}'"
+                sql_user = f"SELECT * FROM User WHERE name='{rememberName}'"
                 cursor.execute(sql_user)
                 user_info = cursor.fetchone()
 
                 if user_info is None:
-                    sql_insert = f"INSERT INTO User (name, stock_name) VALUES ('{user_name}', '{user_stock}')"
+                    sql_insert = f"INSERT INTO User (name, stock_name) VALUES ('{rememberName}', '{stock_name}')"
                     cursor.execute(sql_insert)
                     connection.commit()
 
-                    dispatcher.utter_message(text=f"Welcome {user_name} .\n"
-                                                  f"your interest Stock is : {user_stock}.\n"
+                    dispatcher.utter_message(text=f"Welcome {rememberName} .\n"
+                                                  f"your interest Stock is : {stock_name}.\n"
                                                   f"Do you need a more help ?")
-                    return [SlotSet("remember_user_name", user_name)]
-
+                    rememberName = rememberName
         finally:
             connection.close()
 
@@ -231,6 +230,7 @@ class ActionGetRecommendStock(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        global recommendStock
         
         connection = pymysql.connect(host='127.0.0.1',
                              user='root',
@@ -255,7 +255,8 @@ class ActionGetRecommendStock(Action):
                                                   f"Opening price: {stock_info['opening_price'] * 1350 }₩\n"
                                                   f"Closing price: {stock_info['closing_price'] * 1350 }₩\n"
                                                   f"Fluctuation rate: {stock_info['fluctuation_price']}")
-                    return [SlotSet("recommended_stock", stock_info['name'])]
+                    recommendStock = stock_info['name']
+                    print(recommendStock)
                 else :
                     dispatcher.utter_message(text=f"I'm sorry. Today nothing to recommend.")
         finally:
@@ -272,8 +273,8 @@ class ActionGetMyStockNews(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        stock_name = tracker.get_slot('recommended_stock')
-             
+        global recommendStock
+
         connection = pymysql.connect(host='127.0.0.1',
                              user='root',
                              password='0623',
@@ -284,7 +285,7 @@ class ActionGetMyStockNews(Action):
         try:
             with connection.cursor() as cursor:
                 # SQL 쿼리 실행
-                sql_news = f"SELECT * FROM Info_news WHERE stock_name='{stock_name}'"
+                sql_news = f"SELECT * FROM Info_news WHERE stock_name='{recommendStock}'"
 
                 cursor.execute(sql_news)
                 news_info = cursor.fetchone()
@@ -295,7 +296,7 @@ class ActionGetMyStockNews(Action):
                                                   f"Headline: {news_info['Headline']}\n"
                                                   f"Link: {news_info['Link']}")
                 else :
-                    dispatcher.utter_message(text=f"I'm sorry. I don't have any news about {stock_name}.")
+                    dispatcher.utter_message(text=f"I'm sorry. I don't have any news about {recommendStock}.")
 
         finally:
             connection.close()
@@ -310,9 +311,10 @@ class UpdateRecommendStock(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        stock_name = tracker.get_slot('recommended_stock')
-        print(stock_name)
-        user_name = tracker.get_slot('remember_user_name')
+        global recommendStock, rememberName
+
+        print(recommendStock)
+        print(rememberName)
 
 
         connection = pymysql.connect(host='127.0.0.1',
@@ -324,11 +326,51 @@ class UpdateRecommendStock(Action):
 
         try:
             with connection.cursor() as cursor:
-                if user_name is not None:
-                    sql_update_stock = f"UPDATE User SET stock_name = '{stock_name}' WHERE name = '{user_name}';"
+                if rememberName is not None:
+                    sql_update_stock = f"UPDATE User SET stock_name = '{recommendStock}' WHERE name = '{rememberName}';"
                     cursor.execute(sql_update_stock)
                     connection.commit()
-                    dispatcher.utter_message(text=f"Your interest stock has been updated to: {stock_name}")
+                    dispatcher.utter_message(text=f"Sure, {rememberName} Your interest stock has been updated !"
+                                                  f"Than, Your interest Stock is : {recommendStock}.\n"
+                                                  f"Do you need a more help ?"
+                                             )
+                else:
+                    dispatcher.utter_message(text=f"Please sign up first.")
+        finally:
+            connection.close()
+
+        return []
+    
+class UpdateMyStock(Action):
+
+    def name(self) -> Text:
+        return "action_update_my_stock"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        global recommendStock, rememberName
+        recommendStock = next(tracker.get_latest_entity_values("recommendStock"), None)
+        print(recommendStock)
+        print(rememberName)
+
+        connection = pymysql.connect(host='127.0.0.1',
+                             user='root',
+                             password='0623',
+                             db='RASA',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        try:
+            with connection.cursor() as cursor:
+                if rememberName is not None:
+                    sql_update_stock = f"UPDATE User SET stock_name = '{recommendStock}' WHERE name = '{rememberName}';"
+                    cursor.execute(sql_update_stock)
+                    connection.commit()
+                    dispatcher.utter_message(text=f"Sure, {rememberName} Your interest stock has been updated !"
+                                                  f"Than, Your interest Stock is : {recommendStock}.\n"
+                                                  f"Do you need a more help ?"
+                                             )
                 else:
                     dispatcher.utter_message(text=f"Please sign up first.")
         finally:
