@@ -1,0 +1,44 @@
+[
+  {
+    "tag_name": "entity",
+    "ids_to_tags": {
+      "1": "B-nrememberName",
+      "2": "I-nrememberName",
+      "3": "L-nrememberName",
+      "4": "U-nrememberName",
+      "5": "B-recommendStock",
+      "6": "I-recommendStock",
+      "7": "L-recommendStock",
+      "8": "U-recommendStock",
+      "9": "B-rememberName",
+      "10": "I-rememberName",
+      "11": "L-rememberName",
+      "12": "U-rememberName",
+      "13": "B-stock",
+      "14": "I-stock",
+      "15": "L-stock",
+      "16": "U-stock",
+      "0": "O"
+    },
+    "tags_to_ids": {
+      "B-nrememberName": 1,
+      "I-nrememberName": 2,
+      "L-nrememberName": 3,
+      "U-nrememberName": 4,
+      "B-recommendStock": 5,
+      "I-recommendStock": 6,
+      "L-recommendStock": 7,
+      "U-recommendStock": 8,
+      "B-rememberName": 9,
+      "I-rememberName": 10,
+      "L-rememberName": 11,
+      "U-rememberName": 12,
+      "B-stock": 13,
+      "I-stock": 14,
+      "L-stock": 15,
+      "U-stock": 16,
+      "O": 0
+    },
+    "num_tags": 17
+  }
+]

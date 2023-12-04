@@ -15,6 +15,13 @@ intents:
   - stock_recommend
   - update_recommend_stock
   - news_for_recommend_stock
+  - update_my_stock
+  - my_stock_news
+  - my_stock_info
+  - my_stock_analysis
+  - ask_my_stock_info
+  - ask_my_stock_news
+  - ask_my_stock_analysis
 
 slots:
   stock_name:
@@ -45,8 +52,11 @@ actions:
   - action_put_user_info
   - action_update_recommend_stock
   - action_get_recommend_stock
-  - action_get_my_stock_news
+  - action_get_recommend_stock_news
   - action_update_my_stock
+  - action_get_my_stock_info
+  - action_get_my_stock_analysis
+  - action_get_my_stock_news
 
 templates:
   utter_ask_stock_name:

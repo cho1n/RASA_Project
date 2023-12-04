@@ -233,3 +233,30 @@ nlu:
     - please update my stock [GOOGLE](recommendStock)
     - please update my stock [TESLA](recommendStock)
     - please update my stock [SAMSUNG](recommendStock)
+
+- intent: ask_my_stock_info
+  examples: |
+    - give me information about my interest stock
+    - Please give me information about my interest stock
+    - Do you have any information about my interest stock
+    - Do you have any information about my interest stock please
+    - i want to know about my interest stock
+    - i want to know about my interest stock please
+
+- intent: ask_my_stock_news
+  examples: |
+    - give me news about my interest stock
+    - Please give me news about my interest stock
+    - Do you have any news about my interest stock
+    - Do you have any news about my interest stock please
+    - i want to know about my interest stock news
+    - i want to know about my interest stock news please
+
+- intent: ask_my_stock_analysis
+  examples: |
+    - give me analysis about my interest stock
+    - Please give me analysis about my interest stock
+    - Do you have any analysis about my interest stock
+    - Do you have any analysis about my interest stock please
+    - i want to know about my interest stock analysis
+    - i want to know about my interest stock analysis please

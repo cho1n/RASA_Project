@@ -16,12 +16,19 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
-- story: User Log in and recommend stock
+- story: User Sign up
+  steps:
+  - intent: greet_userinfo
+    entities:
+      - rememberName: Jaewon
+  - action: action_get_user_info
+  - intent: thanks
+  - action: utter_ask_continue
+
+- story: recommend stock
   steps:
   - intent: stock_recommend
   - action: action_get_recommend_stock
-  - intent: update_recommend_stock
-  - action: action_update_recommend_stock
   - intent: thanks
   - action: utter_ask_continue
   - intent: goodbye
@@ -62,12 +69,42 @@ stories:
 
 - story: just asks for recommend stock news
   steps:
-  - intent: stock_recommend
-  - action: action_get_recommend_stock
   - intent: news_for_recommend_stock
-  - action: action_get_my_stock_news
+  - action: action_get_recommend_stock_news
+  - intent: thanks
+  - action: utter_ask_continue
   - intent: goodbye
   - action: utter_goodbye
+
+- story: update recommend stock
+  steps:
+  - intent: update_my_stock
+  - action: action_update_my_stock
+  - intent: thanks
+  - action: utter_ask_continue
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: just asks for my stock news
+  steps:
+  - intent: ask_my_stock_news
+  - action: action_get_my_stock_news
+  - intent: thanks
+  - action: utter_ask_continue
+
+- story: just asks for my stock info
+  steps:
+  - intent: ask_my_stock_info
+  - action: action_get_my_stock_info
+  - intent: thanks
+  - action: utter_ask_continue
+
+- story: just asks for my stock analysis
+  steps:
+  - intent: ask_my_stock_analysis
+  - action: action_get_my_stock_analysis
+  - intent: thanks
+  - action: utter_ask_continue
 
 - story: update recommend stock
   steps:
