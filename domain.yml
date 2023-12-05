@@ -22,6 +22,10 @@ intents:
   - ask_my_stock_info
   - ask_my_stock_news
   - ask_my_stock_analysis
+  - all_stock_request
+  - email_request
+  - email_input
+  - analysis_for_recommend_stock
 
 slots:
   stock_name:
@@ -43,6 +47,7 @@ entities:
   - name
   - recommendStock
   - rememberName
+  - email
 
 actions:
   - action_get_stock_info
@@ -57,6 +62,9 @@ actions:
   - action_get_my_stock_info
   - action_get_my_stock_analysis
   - action_get_my_stock_news
+  - action_get_email_info
+  - action_get_recommend_stock_analysis
+  - action_get_all_stocks
 
 templates:
   utter_ask_stock_name:
@@ -84,6 +92,9 @@ responses:
 
   utter_ask_continue:
   - text: "You're Welcome ! Do you want to continue? or anything else?"
+
+  utter_ask_email:
+  - text: "Sure. Please enter your email address."
 
 session_config:
   session_expiration_time: 60

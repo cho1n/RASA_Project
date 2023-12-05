@@ -4,8 +4,7 @@ from typing import Text, Dict, Any, List
 import pymysql
 from sqlalchemy.dialects import registry
 from rasa_sdk.events import SlotSet
-recommendStock, rememberName = None, None
-
+recommendStock, rememberName, email = None, None, None
 
 # Register the MySQL dialect with SQLAlchemy
 registry.register("mysql", "sqlalchemy.dialects.mysql.mysqldb", "MySQLDialect_mysqldb")
@@ -51,6 +50,40 @@ class ActionGetStockInfo(Action):
             connection.close()
 
         return []
+
+class ActionGetAllStocks(Action):
+
+    def name(self) -> Text:
+        return "action_get_all_stocks"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        connection = pymysql.connect(host='127.0.0.1',
+                             user='root',
+                             password='0623',
+                             db='RASA',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        try:
+            with connection.cursor() as cursor:
+                # SQL 쿼리 실행
+                sql_stock = "SELECT name FROM Info_Stock"
+                cursor.execute(sql_stock)
+                stocks_info = cursor.fetchall()
+
+                if stocks_info:
+                    stock_names = [stock['name'] for stock in stocks_info]
+                    stock_names_str = ", ".join(stock_names)
+                    dispatcher.utter_message(text=f"Sure! Here are the stock names: {stock_names_str}")
+
+        finally:
+            connection.close()
+
+        return []
+
     
 class ActionGetStockNews(Action):
 
@@ -98,7 +131,6 @@ class ActionGetStockAnalysis(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         stock_name = tracker.get_slot('stock_name')
-        print(stock_name)
         
         connection = pymysql.connect(host='127.0.0.1',
                              user='root',
@@ -258,7 +290,7 @@ class ActionGetRecommendStock(Action):
                                                   f"Closing price: {stock_info['closing_price'] * 1350 }₩\n"
                                                   f"Fluctuation rate: {stock_info['fluctuation_price']}")
                     recommendStock = stock_info['name']
-                    print(recommendStock)
+                    print(f"Here is {recommendStock}")
                 else :
                     dispatcher.utter_message(text=f"I'm sorry. Today nothing to recommend.")
         finally:
@@ -274,7 +306,6 @@ class ActionGetRecommendStockNews(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        
         global recommendStock
 
         connection = pymysql.connect(host='127.0.0.1',
@@ -304,6 +335,42 @@ class ActionGetRecommendStockNews(Action):
             connection.close()
 
         return []
+
+class ActionGetRecommendStockAnalysis(Action):
+
+    def name(self) -> Text:
+        return "action_get_recommend_stock_analysis"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        global recommendStock
+        print(f"Hello, {recommendStock}")
+        connection = pymysql.connect(host='127.0.0.1',
+                             user='root',
+                             password='0623',
+                             db='RASA',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        try:
+            with connection.cursor() as cursor:
+                sql_analysis = f"SELECT * FROM Info_analysis WHERE stock_name='{recommendStock}'"
+                cursor.execute(sql_analysis)
+                analysis_info = cursor.fetchone()
+            
+                if analysis_info is not None:
+                    dispatcher.utter_message(text=f"Sure! Here is the analysis you want.\n"
+                                                  f"Stocks: {analysis_info['stock_name']}\n"
+                                                  f"Technical analysis: {analysis_info['Technical_analysis']}\n"
+                                                  f"Outlook: {analysis_info['Outlook']}")
+                else :
+                    dispatcher.utter_message(text=f"I'm sorry. I don't have any analysis about {recommendStock}.")
+
+        finally:
+            connection.close()
+
+        return []
         
 class UpdateRecommendStock(Action):
 
@@ -314,10 +381,6 @@ class UpdateRecommendStock(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         global recommendStock, rememberName
-
-        print(recommendStock)
-        print(rememberName)
-
 
         connection = pymysql.connect(host='127.0.0.1',
                              user='root',
@@ -489,5 +552,24 @@ class ActionGetMyStockNews(Action):
 
         finally:
             connection.close()
+
+        return []
+    
+class ActionGetEmail(Action):
+
+    def name(self) -> Text:
+        return "action_get_email_info"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        global email, rememberName
+        email = next(tracker.get_latest_entity_values("email"), None)
+
+        if rememberName is None:
+            dispatcher.utter_message(text=f"Perfect! Here is your email: {email}.\n"
+                                          f"I will send you the information every friday.\n")
+        else :
+            dispatcher.utter_message(text=f"I'm sorry. I don't have any information about {rememberName}.")
 
         return []

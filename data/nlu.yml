@@ -211,6 +211,17 @@ nlu:
     - Can you give me for news about recommended stock please
     - what is the news about recommended stock
 
+- intent: analysis_for_recommend_stock
+  examples: |
+    - what is the analysis about recommended stock ?
+    - How about recommended stock analysis ?
+    - Do you have any analysis about recommended stock ?
+    - Do you have any analysis about recommended stock please ?
+    - Can you give me for analysis about recommended stock ?
+    - Can you give me for analysis about recommended stock please ?
+    - Please give me for analysis about recommended stock
+    - Please give me for analysis about recommended stock please
+
 - intent: update_my_stock
   examples: |
     - I want to update my interest stock [Apple](recommendStock)
@@ -260,3 +271,29 @@ nlu:
     - Do you have any analysis about my interest stock please
     - i want to know about my interest stock analysis
     - i want to know about my interest stock analysis please
+
+- intent: email_request
+  examples: |
+    - Can I get email about that
+    - Can I get email about that please
+    - i want to get email about that
+    - i want to get email about that please
+    - Can you send email about that
+    - Can you send email about that please
+    - i get email about that
+    - i get email about that please
+
+- intent: email_input
+  examples: |
+    - my email is [cjaewon0217@naver.com](email)
+    - my email is [dodan4651@naver.com](email)
+    - my email is [2019112086@dongguk.edu](email)
+    - my email is [ted2721@gmail.com](email)
+
+- intent: all_stock_request
+  examples: |
+    - What kind of stock do you have?
+    - What kind of stock do you have please?
+    - What is the stock you have?
+    - What is the stock you have please?
+    

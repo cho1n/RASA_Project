@@ -1,0 +1,52 @@
+[
+  {
+    "tag_name": "entity",
+    "ids_to_tags": {
+      "1": "B-email",
+      "2": "I-email",
+      "3": "L-email",
+      "4": "U-email",
+      "5": "B-nrememberName",
+      "6": "I-nrememberName",
+      "7": "L-nrememberName",
+      "8": "U-nrememberName",
+      "9": "B-recommendStock",
+      "10": "I-recommendStock",
+      "11": "L-recommendStock",
+      "12": "U-recommendStock",
+      "13": "B-rememberName",
+      "14": "I-rememberName",
+      "15": "L-rememberName",
+      "16": "U-rememberName",
+      "17": "B-stock",
+      "18": "I-stock",
+      "19": "L-stock",
+      "20": "U-stock",
+      "0": "O"
+    },
+    "tags_to_ids": {
+      "B-email": 1,
+      "I-email": 2,
+      "L-email": 3,
+      "U-email": 4,
+      "B-nrememberName": 5,
+      "I-nrememberName": 6,
+      "L-nrememberName": 7,
+      "U-nrememberName": 8,
+      "B-recommendStock": 9,
+      "I-recommendStock": 10,
+      "L-recommendStock": 11,
+      "U-recommendStock": 12,
+      "B-rememberName": 13,
+      "I-rememberName": 14,
+      "L-rememberName": 15,
+      "U-rememberName": 16,
+      "B-stock": 17,
+      "I-stock": 18,
+      "L-stock": 19,
+      "U-stock": 20,
+      "O": 0
+    },
+    "num_tags": 21
+  }
+]

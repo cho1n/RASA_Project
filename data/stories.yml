@@ -76,6 +76,15 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
+- story: just asks for recommend stock analysis
+  steps:
+  - intent: analysis_for_recommend_stock
+  - action: action_get_recommend_stock_analysis
+  - intent: thanks
+  - action: utter_ask_continue
+  - intent: goodbye
+  - action: utter_goodbye
+
 - story: update recommend stock
   steps:
   - intent: update_my_stock
@@ -114,3 +123,21 @@ stories:
   - action: utter_ask_continue
   - intent: goodbye
   - action: utter_goodbye
+
+- story: email input
+  steps:
+  - intent: email_request
+  - action: utter_ask_email
+  - intent: email_input
+    entities:
+      - email: cjaewon0217@naver.com
+  - action: action_get_email_info
+  - intent: thanks
+  - action: utter_ask_continue
+
+- story: all stock request
+  steps:
+  - intent: all_stock_request
+  - action: action_get_all_stocks
+  - intent: thanks
+  - action: utter_ask_continue
