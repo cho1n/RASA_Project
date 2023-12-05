@@ -85,7 +85,7 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
-- story: update recommend stock
+- story: update my stock
   steps:
   - intent: update_my_stock
   - action: action_update_my_stock
@@ -124,10 +124,15 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
-- story: email input
+- story: email request
   steps:
   - intent: email_request
   - action: utter_ask_email
+  - intent: thanks
+  - action: utter_ask_continue
+
+- story: email input
+  steps:
   - intent: email_input
     entities:
       - email: cjaewon0217@naver.com
@@ -139,5 +144,35 @@ stories:
   steps:
   - intent: all_stock_request
   - action: action_get_all_stocks
+  - intent: thanks
+  - action: utter_ask_continue
+
+- story: concept content search
+  steps:
+  - intent: request_concept_content
+    entities:
+      - conceptName: closing price
+  - action: action_get_concept_content
+  - intent: thanks
+  - action: utter_ask_continue
+
+- story: request concept link
+  steps:
+  - intent: concept_link_request
+  - action: action_get_concept_link
+  - intent: thanks
+  - action: utter_ask_continue
+
+- story: stock not recommend
+  steps:
+  - intent: stock_not_recommend
+  - action: action_get_not_recommend_stock
+  - intent: thanks
+  - action: utter_ask_continue
+
+- story: hottest stock request
+  steps:
+  - intent: hottest_stock_request
+  - action: action_get_hottest_stock
   - intent: thanks
   - action: utter_ask_continue

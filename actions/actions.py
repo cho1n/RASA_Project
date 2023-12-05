@@ -4,7 +4,7 @@ from typing import Text, Dict, Any, List
 import pymysql
 from sqlalchemy.dialects import registry
 from rasa_sdk.events import SlotSet
-recommendStock, rememberName, email = None, None, None
+recommendStock, rememberName, email, conceptName = None, None, None, None
 
 # Register the MySQL dialect with SQLAlchemy
 registry.register("mysql", "sqlalchemy.dialects.mysql.mysqldb", "MySQLDialect_mysqldb")
@@ -42,6 +42,7 @@ class ActionGetStockInfo(Action):
                                                   f"Opening price: {stock_info['opening_price'] * 1350 }₩\n"
                                                   f"Closing price: {stock_info['closing_price'] * 1350 }₩\n"
                                                   f"Market Cap: {stock_info['market_cap'] * 1350 }₩\n"
+                                                  f"Transfer Amount: {stock_info['Transfer_amount']}\n"
                                                   f"Fluctuation rate: {stock_info['fluctuation_price']}")
                 else :
                     dispatcher.utter_message(text=f"I'm sorry. I don't have any information about {stock_name}.")
@@ -77,7 +78,115 @@ class ActionGetAllStocks(Action):
                 if stocks_info:
                     stock_names = [stock['name'] for stock in stocks_info]
                     stock_names_str = ", ".join(stock_names)
-                    dispatcher.utter_message(text=f"Sure! Here are the stock names: {stock_names_str}")
+                    dispatcher.utter_message(text=f"Sure! Here are the stock names: {stock_names_str}\n"
+                                                    f"Do you need a more help ?")
+
+        finally:
+            connection.close()
+
+        return []
+    
+class ActionGetAllConcepts(Action):
+
+    def name(self) -> Text:
+        return "action_get_all_concepts"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        connection = pymysql.connect(host='127.0.0.1',
+                             user='root',
+                             password='0623',
+                             db='RASA',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        try:
+            with connection.cursor() as cursor:
+                # SQL 쿼리 실행
+                sql_concept = "SELECT concept_name FROM stock_concept"
+                cursor.execute(sql_concept)
+                concept_info = cursor.fetchall()
+
+                if concept_info:
+                    concept_names = [concept['concept_name'] for concept in concept_info]
+                    stock_names_str = ", ".join(concept_names)
+                    dispatcher.utter_message(text=f"Here are the concept List: {stock_names_str}\n"
+                                                    f"Do you need a more help ?")
+                                             
+
+        finally:
+            connection.close()
+
+        return []
+    
+class ActionGetConceptLink(Action):
+
+    def name(self) -> Text:
+        return "action_get_concept_link"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        global conceptName
+        
+        connection = pymysql.connect(host='127.0.0.1',
+                             user='root',
+                             password='0623',
+                             db='RASA',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        try:
+            with connection.cursor() as cursor:
+                # SQL 쿼리 실행
+                sql_concept = f"SELECT concept_link FROM stock_concept WHERE concept_name='{conceptName}'"
+                cursor.execute(sql_concept)
+                concept_info = cursor.fetchall()
+
+                if concept_info:
+                    concept_link = concept_info[0]['concept_link']  # Assuming concept_info is a list of dictionaries
+                    dispatcher.utter_message(text=f"Sure! I will give you more concept information: {concept_link}\n"
+                                                  f"Please check this link. It has more information for you.\n"
+                                                  f"Do you need more help?")
+
+        finally:
+            connection.close()
+
+        return []
+
+class ActionGetConceptContent(Action):
+
+    def name(self) -> Text:
+        return "action_get_concept_content"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        global conceptName
+        conceptName = next(tracker.get_latest_entity_values("conceptName"), None)
+        
+        connection = pymysql.connect(host='127.0.0.1',
+                             user='root',
+                             password='0623',
+                             db='RASA',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        try:
+            with connection.cursor() as cursor:
+                # SQL 쿼리 실행
+                sql_concept = f"SELECT concept_content FROM Stock_concept WHERE concept_name='{conceptName}'"
+                cursor.execute(sql_concept)
+                concept_info = cursor.fetchall()
+
+                if concept_info:
+                    concept_content = concept_info[0]['concept_content']  # Assuming concept_info is a list of dictionaries
+                    dispatcher.utter_message(text=f"Sure! Here is the concept Content for you\n"
+                                                  f"{conceptName}: {concept_content}\n"
+                                                  f"Do you need more help?")
+
 
         finally:
             connection.close()
@@ -149,7 +258,7 @@ class ActionGetStockAnalysis(Action):
                 analysis_info = cursor.fetchone()
 
                 if analysis_info is not None:
-                    dispatcher.utter_message(text=f"Sure! Here is the analysis you want.\n"
+                    dispatcher.utter_message(text=f"Here is the analysis you want.\n"
                                                   f"Technical analysis: {analysis_info['Technical_analysis']}\n"
                                                   f"Outlook: {analysis_info['Outlook']}")
                 else :
@@ -194,9 +303,11 @@ class ActionGetUserInfo(Action):
                     user_name = user_info['name']
                     stock_name = user_info['stock_name']
                     stock_recent_price = user_info['recent_price']
-                    stock_opening_price = user_info['recent_price']
-                    stock_closing_price = user_info['recent_price']
-                    stock_fluctuation_price = user_info['recent_price']
+                    stock_opening_price = user_info['opening_price']
+                    stock_closing_price = user_info['closing_price']
+                    stock_fluctuation_price = user_info['fluctuation_price']
+                    stock_market_cap = user_info['market_cap']
+                    stock_transfer_amount = user_info['Transfer_amount']
 
                     dispatcher.utter_message(text=f"Welcome {user_name} .\n"
                                                   f"Here is your interest Stock: {stock_name}.\n"
@@ -204,6 +315,8 @@ class ActionGetUserInfo(Action):
                                                   f"Opening Price of your interest Stock: {stock_opening_price * 1350} ₩\n"
                                                   f"Closing Price of your interest Stock: {stock_closing_price * 1350} ₩\n"
                                                   f"Fluctuation Price of interest Stock: {stock_fluctuation_price}.\n"
+                                                  f"Market Cap: {stock_market_cap * 1350 }₩\n"
+                                                  f"Transfer Amount: {stock_transfer_amount}.\n"
                                                   f"Do you need a more help ?")
                     rememberName = user_name
                     recommendStock = stock_name
@@ -288,11 +401,55 @@ class ActionGetRecommendStock(Action):
                                                   f"Recent price: {stock_info['recent_price'] * 1350 }₩\n"
                                                   f"Opening price: {stock_info['opening_price'] * 1350 }₩\n"
                                                   f"Closing price: {stock_info['closing_price'] * 1350 }₩\n"
+                                                  f"Market Cap: {stock_info['market_cap'] * 1350 }₩\n"
+                                                  f"Transfer Amount: {stock_info['Transfer_amount']}.\n"
                                                   f"Fluctuation rate: {stock_info['fluctuation_price']}")
                     recommendStock = stock_info['name']
                     print(f"Here is {recommendStock}")
                 else :
                     dispatcher.utter_message(text=f"I'm sorry. Today nothing to recommend.")
+        finally:
+            connection.close()
+
+        return []
+    
+class ActionGetNotRecommendStock(Action):
+
+    def name(self) -> Text:
+        return "action_get_not_recommend_stock"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        connection = pymysql.connect(host='127.0.0.1',
+                             user='root',
+                             password='0623',
+                             db='RASA',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        try:
+            with connection.cursor() as cursor:
+                # SQL 쿼리 실행
+                sql_stock = f"SELECT * FROM Info_Stock ORDER BY (market_cap / recent_price) ASC LIMIT 1;"
+                cursor.execute(sql_stock)
+                stock_info = cursor.fetchone()
+
+                if stock_info is not None:
+                    dispatcher.utter_message(text=f"Sure! Here is the Not Recommend Stock.\n"
+                                                  f"The standard for this is set to PER.\n"
+                                                  f"PER is the current stock price relative to the market cap.\n"
+                                                  f"This stock have a least PER.\n"
+                                                  f"Stocks: {stock_info['name']}\n"
+                                                  f"Recent price: {stock_info['recent_price'] * 1350 }₩\n"
+                                                  f"Opening price: {stock_info['opening_price'] * 1350 }₩\n"
+                                                  f"Closing price: {stock_info['closing_price'] * 1350 }₩\n"
+                                                  f"Market Cap: {stock_info['market_cap'] * 1350 }₩\n"
+                                                  f"Transfer Amount: {stock_info['Transfer_amount']}.\n"
+                                                  f"Fluctuation rate: {stock_info['fluctuation_price']}")
+                else :
+                    dispatcher.utter_message(text=f"Great news. Today I don't have any not recommend stock")
         finally:
             connection.close()
 
@@ -325,7 +482,7 @@ class ActionGetRecommendStockNews(Action):
                 
                 
                 if news_info is not None:
-                    dispatcher.utter_message(text=f"Sure! Here is the news you want.\n"
+                    dispatcher.utter_message(text=f"This is the news you want.\n"
                                                   f"Headline: {news_info['Headline']}\n"
                                                   f"Link: {news_info['Link']}")
                 else :
@@ -360,7 +517,7 @@ class ActionGetRecommendStockAnalysis(Action):
                 analysis_info = cursor.fetchone()
             
                 if analysis_info is not None:
-                    dispatcher.utter_message(text=f"Sure! Here is the analysis you want.\n"
+                    dispatcher.utter_message(text=f"Here is the analysis you want.\n"
                                                   f"Stocks: {analysis_info['stock_name']}\n"
                                                   f"Technical analysis: {analysis_info['Technical_analysis']}\n"
                                                   f"Outlook: {analysis_info['Outlook']}")
@@ -432,7 +589,7 @@ class UpdateMyStock(Action):
                     sql_update_stock = f"UPDATE User SET stock_name = '{recommendStock}' WHERE name = '{rememberName}';"
                     cursor.execute(sql_update_stock)
                     connection.commit()
-                    dispatcher.utter_message(text=f"Sure, {rememberName} Your interest stock has been updated !"
+                    dispatcher.utter_message(text=f"Sure, {rememberName} Your interest stock has been updated !\n"
                                                   f"Than, Your interest Stock is : {recommendStock}.\n"
                                                   f"Do you need a more help ?"
                                              )
@@ -566,10 +723,50 @@ class ActionGetEmail(Action):
         global email, rememberName
         email = next(tracker.get_latest_entity_values("email"), None)
 
-        if rememberName is None:
+        if email is not None :
             dispatcher.utter_message(text=f"Perfect! Here is your email: {email}.\n"
                                           f"I will send you the information every friday.\n")
         else :
             dispatcher.utter_message(text=f"I'm sorry. I don't have any information about {rememberName}.")
+
+        return []
+    
+class ActionGetHottestStock(Action):
+
+    def name(self) -> Text:
+        return "action_get_hottest_stock"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        connection = pymysql.connect(host='127.0.0.1',
+                             user='root',
+                             password='0623',
+                             db='RASA',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        try:
+            with connection.cursor() as cursor:
+                # SQL 쿼리 실행
+                sql_stock = f"SELECT * FROM Info_Stock ORDER BY Transfer_amount DESC LIMIT 1;"
+                cursor.execute(sql_stock)
+                stock_info = cursor.fetchone()
+
+                if stock_info is not None:
+                    dispatcher.utter_message(text=f"This is the Hottest Stock.\n"
+                                                  f"This stock have a large Transfer amount today.\n"
+                                                  f"Stocks: {stock_info['name']}\n"
+                                                  f"Recent price: {stock_info['recent_price'] * 1350 }₩\n"
+                                                  f"Opening price: {stock_info['opening_price'] * 1350 }₩\n"
+                                                  f"Closing price: {stock_info['closing_price'] * 1350 }₩\n"
+                                                  f"Market Cap: {stock_info['market_cap'] * 1350 }₩\n"
+                                                  f"Transfer Amount: {stock_info['Transfer_amount']}.\n"
+                                                  f"Fluctuation rate: {stock_info['fluctuation_price']}")
+                else :
+                    dispatcher.utter_message(text=f"Bad news. Today nothing to recommend.")
+        finally:
+            connection.close()
 
         return []

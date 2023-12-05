@@ -296,4 +296,63 @@ nlu:
     - What kind of stock do you have please?
     - What is the stock you have?
     - What is the stock you have please?
-    
+
+- intent: all_concept_request
+  examples: |
+    - What kind of concept do you have?
+    - What kind of concept do you have please?
+    - What is the concept you have?
+    - What is the concept you have please?
+  
+- intent: request_concept_content
+  examples: |
+    - give me concept content about [Openning price](conceptName) ?
+    - give me concept content about [Closing price](conceptName) ?
+    - give me concept content about [Delisting](conceptName) ?
+    - give me concept content about [Dividends](conceptName) ?
+    - give me concept content about [Market Capitalization](conceptName) ?
+    - I want to know about [Delisting](conceptName).
+    - I want to know about [Openning price](conceptName).
+    - I want to know about [Closing price](conceptName).
+    - I want to know about [Closing price](conceptName) please.
+    - I want to know about [Dividends](conceptName).
+    - I want to know about [Market Capitalization](conceptName).
+    - What is the content about [Openning price](conceptName) ?
+    - What is the content about [Closing price](conceptName) ?
+    - What is the content about [Delisting](conceptName) ?
+
+- intent: concept_link_request
+  examples: |
+    - i want to more information about that.
+    - i want to more information about that please.
+    - i want to know more information about that.
+    - i want to know more information about that please.
+    - Do you have more information about that?
+    - Do you have more information about that please?
+    - Can you give me more information about that?
+    - Can you give me more information about that please?
+    - give me some more information about that.
+
+- intent: stock_not_recommend
+  examples: |
+    - give me not recommend stock
+    - Do you have any not recommend stock
+    - Do you have avoid stock today ?
+    - Do you have avoid stock today please ?
+    - Do you have not recommend stock today ?
+    - Do you have not recommend stock today please ?
+    - What is the avoid stock today ?
+    - What is the avoid stock today please ?
+
+- intent: hottest_stock_request
+  examples: |
+    - What is the hottest stock today ?
+    - What is the hottest stock today please ?
+    - What is the hottest stock ?
+    - What is the hottest stock please ?
+    - give me hottest stock
+    - give me hottest stock please
+    - Do you have any hottest stock ?
+    - Do you have any hottest stock please ?
+    - What kind of hottest stock do you have ?
+    - What kind of hottest stock do you have please ?

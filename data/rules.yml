@@ -31,3 +31,8 @@ rules:
   steps:
   - intent: stock_analysis
   - action: action_get_stock_analysis
+
+- rule: Ask stock concept
+  steps:
+  - intent: all_concept_request
+  - action: action_get_all_concepts
