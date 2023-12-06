@@ -449,7 +449,8 @@ class ActionGetNotRecommendStock(Action):
                                                   f"Closing price: {stock_info['closing_price'] * 1350 }₩\n"
                                                   f"Market Cap: {stock_info['market_cap'] * 1350 }₩\n"
                                                   f"Transfer Amount: {stock_info['Transfer_amount']}.\n"
-                                                  f"Fluctuation rate: {stock_info['fluctuation_price']}")
+                                                  f"Fluctuation rate: {stock_info['fluctuation_price']}"
+                                                  )
                 else :
                     dispatcher.utter_message(text=f"Great news. Today I don't have any not recommend stock")
         finally:
