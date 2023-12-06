@@ -11,28 +11,31 @@ stories:
   - intent: input_userinfo
     entities:
       - rememberName: Jaewon
-      - stock: Apple
+      - userStock: Apple
   - action: action_put_user_info
-  - intent: goodbye
-  - action: utter_goodbye
 
-- story: User Sign up
+- story: User Login & Deny
   steps:
   - intent: greet_userinfo
     entities:
       - rememberName: Jaewon
   - action: action_get_user_info
-  - intent: thanks
-  - action: utter_ask_continue
+  - intent: deny
+  - action: utter_deny
+
+- story: Greet and Login deny
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: deny
+  - action: utter_deny
 
 - story: recommend stock
   steps:
   - intent: stock_recommend
   - action: action_get_recommend_stock
-  - intent: thanks
-  - action: utter_ask_continue
-  - intent: goodbye
-  - action: utter_goodbye
+  - intent: deny
+  - action: utter_deny
 
 - story: just asks for stock news 
   steps:
@@ -88,6 +91,8 @@ stories:
 - story: update my stock
   steps:
   - intent: update_my_stock
+    entities:
+      - userStock: Apple
   - action: action_update_my_stock
   - intent: thanks
   - action: utter_ask_continue

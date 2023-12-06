@@ -54,6 +54,7 @@ entities:
   - rememberName
   - email
   - conceptName
+  - userStock
 
 
 actions:
@@ -84,7 +85,7 @@ templates:
 
 responses:
   utter_greet:
-    - text: "Hello! How can I assist you today?"
+    - text: "Hello! Do you want Login?"
 
   utter_cheer_up:
   - text: "Here is something to cheer you up:"
@@ -107,6 +108,9 @@ responses:
 
   utter_ask_email:
   - text: "Sure. Please enter your email address."
+
+  utter_deny:
+  - text: "Okay. Anything else?"
 
 session_config:
   session_expiration_time: 60

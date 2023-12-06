@@ -66,39 +66,39 @@ nlu:
 
 - intent: input_userinfo
   examples: |
-    - i want to sign up. my name is [Jaewon](rememberName), my interest stock is [Apple](stock)
-    - i want to sign up. my name is [Minwoo](rememberName), my interest stock is [Apple](stock)
-    - i want to sign up. my name is [Jihoon](rememberName), my interest stock is [Apple](stock)
-    - i want to sign up. my name is [Jiho](rememberName), my interest stock is [Apple](stock)
-    - i want to sign up. my name is [Suhyun](rememberName), my interest stock is [MicroSoft](stock)
-    - i want to sign up. my name is [Jaewon](rememberName), my interest stock is [MicroSoft](stock)
-    - i want to sign up. my name is [Minwoo](rememberName), my interest stock is [MicroSoft](stock)
-    - i want to sign up. my name is [Jihoon](rememberName), my interest stock is [MicroSoft](stock)
-    - i want to sign up. my name is [Jiho](rememberName), my interest stock is [MicroSoft](stock)
-    - i want to sign up. my name is [Jaewon](rememberName), my interest stock is [AMAZON](stock)
-    - i want to sign up. my name is [Minwoo](rememberName), my interest stock is [AMAZON](stock)
-    - i want to sign up. my name is [Jihoon](rememberName), my interest stock is [AMAZON](stock)
-    - i want to sign up. my name is [Jiho](rememberName), my interest stock is [AMAZON](stock)
-    - my name is [Jaewon](rememberName), my interest stock is [Apple](stock)
-    - my name is [Minwoo](rememberName), my interest stock is [Apple](stock)
-    - my name is [Jihoon](rememberName), my interest stock is [Apple](stock)
-    - my name is [Jiho](rememberName), my interest stock is [Apple](stock)
-    - my name is [Suhyun](rememberName), my interest stock is [MicroSoft](stock)
-    - my name is [Jaewon](rememberName), my interest stock is [MicroSoft](stock)
-    - my name is [Minwoo](nrememberName), my interest stock is [MicroSoft](stock)
-    - my name is [Jihoon](rememberName), my interest stock is [MicroSoft](stock)
-    - my name is [Jiho](rememberName), my interest stock is [MicroSoft](stock)
+    - i want to sign up. my name is [Jaewon](rememberName), my interest stock is [Apple](userStock)
+    - i want to sign up. my name is [Minwoo](rememberName), my interest stock is [Apple](userStock)
+    - i want to sign up. my name is [Jihoon](rememberName), my interest stock is [Apple](userStock)
+    - i want to sign up. my name is [Jiho](rememberName), my interest stock is [Apple](userStock)
+    - i want to sign up. my name is [Suhyun](rememberName), my interest stock is [MicroSoft](userStock)
+    - i want to sign up. my name is [Jaewon](rememberName), my interest stock is [MicroSoft](userStock)
+    - i want to sign up. my name is [Minwoo](rememberName), my interest stock is [MicroSoft](userStock)
+    - i want to sign up. my name is [Jihoon](rememberName), my interest stock is [MicroSoft](userStock)
+    - i want to sign up. my name is [Jiho](rememberName), my interest stock is [MicroSoft](userStock)
+    - i want to sign up. my name is [Jaewon](rememberName), my interest stock is [AMAZON](userStock)
+    - i want to sign up. my name is [Minwoo](rememberName), my interest stock is [AMAZON](userStock)
+    - i want to sign up. my name is [Jihoon](rememberName), my interest stock is [AMAZON](userStock)
+    - i want to sign up. my name is [Jiho](rememberName), my interest stock is [AMAZON](userStock)
+    - my name is [Jaewon](rememberName), my interest stock is [Apple](userStock)
+    - my name is [Minwoo](rememberName), my interest stock is [Apple](userStock)
+    - my name is [Jihoon](rememberName), my interest stock is [Apple](userStock)
+    - my name is [Jiho](rememberName), my interest stock is [Apple](userStock)
+    - my name is [Suhyun](rememberName), my interest stock is [MicroSoft](userStock)
+    - my name is [Jaewon](rememberName), my interest stock is [MicroSoft](userStock)
+    - my name is [Minwoo](nrememberName), my interest stock is [MicroSoft](userStock)
+    - my name is [Jihoon](rememberName), my interest stock is [MicroSoft](userStock)
+    - my name is [Jiho](rememberName), my interest stock is [MicroSoft](userStock)
 
 
 - intent: deny
   examples: |
+    - no thanks
+    - never mind
+    - no thank you
+    - it's Ok
     - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
+    - nope
+    - nah
 
 - intent : thanks
   examples: |
@@ -197,8 +197,8 @@ nlu:
 
 - intent: update_recommend_stock
   examples: |
-    - update my stock for recommendation
-    - please update my stock for recommendation
+    - yes, update my stock for recommendation
+    - yes, please update my stock for recommendation
     - update my stock what you recommend
     - please update my stock what you recommend
     - update my stock
@@ -224,26 +224,26 @@ nlu:
 
 - intent: update_my_stock
   examples: |
-    - I want to update my interest stock [Apple](recommendStock)
-    - I want to update my interest stock [MicroSoft](recommendStock)
-    - I want to update my interest stock [AMAZON](recommendStock)
-    - I want to update my interest stock [GOOGLE](recommendStock)
-    - I want to update my interest stock [TESLA](recommendStock)
-    - I want to update my interest stock [SAMSUNG](recommendStock)
-    - I want to update my interest stock [FACEBOOK](recommendStock)
-    - update my stock [Apple](recommendStock)
-    - update my stock [MicroSoft](recommendStock)
-    - update my stock [AMAZON](recommendStock)
-    - update my stock [GOOGLE](recommendStock)
-    - update my stock [TESLA](recommendStock)
-    - update my stock [SAMSUNG](recommendStock)
-    - update my stock [FACEBOOK](recommendStock)
-    - please update my stock [Apple](recommendStock)
-    - please update my stock [MicroSoft](recommendStock)
-    - please update my stock [AMAZON](recommendStock)
-    - please update my stock [GOOGLE](recommendStock)
-    - please update my stock [TESLA](recommendStock)
-    - please update my stock [SAMSUNG](recommendStock)
+    - I want to update my interest stock [Apple](userStock)
+    - I want to update my interest stock [MicroSoft](userStock)
+    - I want to update my interest stock [AMAZON](userStock)
+    - I want to update my interest stock [GOOGLE](userStock)
+    - I want to update my interest stock [TESLA](userStock)
+    - I want to update my interest stock [SAMSUNG](userStock)
+    - I want to update my interest stock [FACEBOOK](userStock)
+    - update my stock [Apple](userStock)
+    - update my stock [MicroSoft](userStock)
+    - update my stock [AMAZON](userStock)
+    - update my stock [GOOGLE](userStock)
+    - update my stock [TESLA](userStock)
+    - update my stock [SAMSUNG](userStock)
+    - update my stock [FACEBOOK](userStock)
+    - please update my stock [Apple](userStock)
+    - please update my stock [MicroSoft](userStock)
+    - please update my stock [AMAZON](userStock)
+    - please update my stock [GOOGLE](userStock)
+    - please update my stock [TESLA](userStock)
+    - please update my stock [SAMSUNG](userStock)
 
 - intent: ask_my_stock_info
   examples: |
