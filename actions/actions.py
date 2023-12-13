@@ -539,7 +539,7 @@ class UpdateRecommendStock(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        global recommendStock, rememberName
+        global recommendStock, rememberName, userStock
 
         connection = pymysql.connect(host='127.0.0.1',
                              user='root',
@@ -558,6 +558,9 @@ class UpdateRecommendStock(Action):
                                                   f"Than, Your interest Stock is : {recommendStock}.\n"
                                                   f"Do you need a more help ?"
                                              )
+                    userStock = recommendStock
+                    print(f"User Stock: {userStock}")
+
                 else:
                     dispatcher.utter_message(text=f"Please sign up first.")
         finally:
@@ -575,7 +578,6 @@ class UpdateMyStock(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         global userStock, rememberName
         userStock = next(tracker.get_latest_entity_values("userStock"), None)
-        print(rememberName)
 
         connection = pymysql.connect(host='127.0.0.1',
                              user='root',
